@@ -44,20 +44,7 @@ def ekgtoimage(x, maxamp):
         output[i, diffres[i], 2] = 255
     return output
 
-def ekgtoimage(x):
-    x = np.array(x)
-    output = np.zeros((len(x), 2070, 3), dtype=np.uint8)
-    xtemp = (2048*(x/2048)).astype(np.uint16)
-    freq = abs(np.fft.fft(x - np.mean(x)))
-    freqres = (2048*(freq/np.max(freq))).astype(np.uint16)
-    diff = abs(np.convolve(x, [-1, 1], 'valid'))
-    diff = np.concatenate((diff, [np.mean(diff)]))
-    diffres = (2048*(diff/np.max(diff))).astype(np.uint16)
-    for i in range(len(x)):
-        output[i, xtemp[i]:xtemp[i]+20, 0] = 255
-        output[i, freqres[i]:freqres[i]+20, 1] = 255
-        output[i, diffres[i]:diffres[i]+20, 2] = 255
-    return output
+
 
 
 
